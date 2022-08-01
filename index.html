@@ -32,14 +32,14 @@
 //                   + "z: " + aZ;                 // z軸の値
 // }
 
-  :
+
 
 //. DeviceOrientationEvent オブジェクトが有効な環境か？　をチェック
 if( window.DeviceOrientationEvent ){
   //. DeviceOrientationEvent オブジェクトが有効な場合のみ、deviceorientation イベント発生時に deviceOrientaion 関数がハンドリングするよう登録
   window.addEventListener( "deviceorientation", deviceOrientation );
 }
-  :
+
 
 //. deviceorientation イベントハンドラ
 function deviceOrientation( e ){
@@ -51,10 +51,10 @@ function deviceOrientation( e ){
   var fb = e.beta;      //. 前後の傾き角度
   var lr = e.gamma;  //. 左右の傾き角度
 
-    :
+
 }
 
-  :
+
 
 </script>
  
