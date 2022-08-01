@@ -32,14 +32,25 @@
 //                   + "z: " + aZ;                 // z軸の値
 // }
 
-
+function ClickRequestDeviceSensor(){
+  //. ユーザーに「許可」を求めるダイアログを表示
+  DeviceOrientationEvent.requestPermission().then( function( response ){
+    if( response === 'granted' ){
+      //. 許可された場合のみイベントハンドラを追加できる
+      window.addEventListener( "deviceorientation", deviceOrientation );
+      //. 画面上部のボタンを消す
+      $('#sensorrequest').css( 'display', 'none' );
+    }
+  }).catch( function( e ){
+    console.log( e );
+  });
+}
 
 //. DeviceOrientationEvent オブジェクトが有効な環境か？　をチェック
 if( window.DeviceOrientationEvent ){
   //. DeviceOrientationEvent オブジェクトが有効な場合のみ、deviceorientation イベント発生時に deviceOrientaion 関数がハンドリングするよう登録
   window.addEventListener( "deviceorientation", deviceOrientation );
 }
-
 
 //. deviceorientation イベントハンドラ
 function deviceOrientation( e ){
@@ -51,9 +62,7 @@ function deviceOrientation( e ){
   var fb = e.beta;      //. 前後の傾き角度
   var lr = e.gamma;  //. 左右の傾き角度
 
-
 }
-
 
 
 </script>
