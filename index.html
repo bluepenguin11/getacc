@@ -26,11 +26,7 @@ function ClickRequestDeviceSensor(){
   DeviceOrientationEvent.requestPermission().then( function( response ){
     if( response === 'granted' ){
       //. 許可された場合のみイベントハンドラを追加できる
-      window.addEventListener("devicemotion", (dat) => {
-       aX = dat.accelerationIncludingGravity.x;    // x軸の重力加速度（Android と iOSでは正負が逆）
-       aY = dat.accelerationIncludingGravity.y;    // y軸の重力加速度（Android と iOSでは正負が逆）
-       aZ = dat.accelerationIncludingGravity.z;    // z軸の重力加速度（Android と iOSでは正負が逆）
-      });
+      window.addEventListener("devicemotion",devicemotion);
       //. 画面上部のボタンを消す
       $('#sensorrequest').css( 'display', 'none' );
     }
@@ -42,17 +38,20 @@ function ClickRequestDeviceSensor(){
 //. DeviceOrientationEvent オブジェクトが有効な環境か？　をチェック
 if( window.DeviceOrientationEvent ){
   //. DeviceOrientationEvent オブジェクトが有効な場合のみ、deviceorientation イベント発生時に deviceOrientaion 関数がハンドリングするよう登録
-  window.addEventListener( "deviceorientation", deviceOrientation );
+  window.addEventListener( "devicemotion", (dat) => {
+   aX = dat.accelerationIncludingGravity.x;    // x軸の重力加速度（Android と iOSでは正負が逆）
+   aY = dat.accelerationIncludingGravity.y;    // y軸の重力加速度（Android と iOSでは正負が逆）
+   aZ = dat.accelerationIncludingGravity.z;    // z軸の重力加速度（Android と iOSでは正負が逆）
+  }); devicemotion );
 }
 
 //. deviceorientation イベントハンドラ
-function deviceOrientation( e ){
+function devicemotion( e ){
   //. 通常の処理を無効にする
   e.preventDefault();
-
-// 指定時間ごとに繰り返し実行される setInterval(実行する内容, 間隔[ms]) タイマーを設定
+ // 指定時間ごとに繰り返し実行される setInterval(実行する内容, 間隔[ms]) タイマーを設定
  var timer = window.setInterval(() => {
-     displayData();      // displayData 関数を実行
+  displayData();      // displayData 関数を実行
  }, 33); // 33msごとに（1秒間に約30回）
  // データを表示する displayData 関数
  function displayData() {
